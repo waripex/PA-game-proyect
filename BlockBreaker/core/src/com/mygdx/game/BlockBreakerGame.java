@@ -41,7 +41,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    nivel = 1;
 		    crearBloques(2+nivel);
 		    vel = 1;
-		    tamano = 5;
+		    tamano = 2;
 		    
 		    shape = new ShapeRenderer();
 		    ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true);
@@ -109,9 +109,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        if (ball.getY()<0) {
 	        	vidas--;
 	        	//nivel = 1;
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
-	        }
+	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);	        }
 	        
 	        // verificar game over
 	        if (vidas<=0) {
@@ -119,7 +117,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        	nivel = 1;
 	        	puntaje = 0;
 	        	vel =1;
-	        	tamano = 5;
+	        	tamano = 2;
 	        	crearBloques(2+nivel);
 	        	
 	        	gameOver = true; // extra
@@ -132,7 +130,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        if (blocks.size()==0) {
 	        	nivel++;
 	        	vidas = vidas+1;
-	        	tamano +=5;
+	        	tamano +=2;
 	        	vel+=1;
 	        	crearBloques(2+nivel);
 	        	
