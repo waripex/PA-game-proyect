@@ -15,8 +15,8 @@ public class Block extends Figura {
     	super(x,y, new Color(0, 0, 0, 0));
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        this.width = 70;//75 para abajo
+        this.height = 30;//35 para abajo
         destroyed = false;
         Random r = new Random(x+y);
         

@@ -15,8 +15,8 @@ public class Paddle extends Figura{
     	super(x, y, Color.BLUE);
     	this.x = x;
     	this.y= y;
-    	width = ancho;
-    	height = alto;
+    	width = 200;//350 max
+    	height = 15;// lo k quieras
     }
      
     // Setter & getter: atributos primitivos

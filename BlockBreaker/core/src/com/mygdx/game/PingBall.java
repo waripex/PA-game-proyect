@@ -18,9 +18,9 @@ public class PingBall extends Figura{
 	    	super(x,y, Color.WHITE);
 	        this.x = x;
 	        this.y = y;
-	        this.size = size;
-	        this.xSpeed = xSpeed;
-	        this.ySpeed = ySpeed;
+	        this.size = size;//tamaño
+	        this.xSpeed += xSpeed;
+	        this.ySpeed += ySpeed;
 	        estaQuieto = iniciaQuieto;
 	    }
 	    
