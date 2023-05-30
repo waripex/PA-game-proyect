@@ -50,7 +50,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    
 		}
 		
-	
+		// Metodo en el cual se crean todos los bloques que se mostraran al iniciar el juego
 		public void crearBloques(int filas) {
 			blocks.clear();
 			int blockWidth = 70;
@@ -64,7 +64,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    }
 		}
 		
-		
+		// Metodo encargado de imprimir todos los textos del juego.
 		public void dibujaTextos() {
 			//actualizar matrices de la cámara
 			camera.update();
@@ -112,6 +112,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        
 	        // verificar game over
 	        if (vidas<=0) {
+	        	// Reinicio del nivel
 	        	vidas = 3;
 	        	nivel = 1;
 	        	vel = 1;
@@ -128,7 +129,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
 	        	nivel++;
-	        	vidas ++;
+	        	vidas ++;// Se le agrega una vida extra al pasr de nivel
 	        	tamano +=2;
 	        	vel ++;
 	        	crearBloques(2+nivel);

@@ -11,6 +11,7 @@ public class Block extends Figura implements ICollidable{
     Color cc;
     boolean destroyed;
     
+ // Constructor de la clase Block
     public Block(int x, int y, int width, int height) {
     	super(x,y, new Color(0, 0, 0, 0));
         this.x = x;
@@ -26,18 +27,24 @@ public class Block extends Figura implements ICollidable{
     
     //Extra
     
+    // implementacion de metodos heredados de la clase abstracta Figura
+ 	// Los metodos son: update() y draw ()
+    
     @Override
     public void draw(ShapeRenderer shape){
+    	// metodo en el que se "dibuja" y se "pinta" la figura Block
     	shape.setColor(cc);
         shape.rect(x, y, width, height);
     }
     
     @Override
-    public void update() {
+    public void update() {// No se utliza
     }
     
+    // Implementacion metodos de interfaz ICollidable
     @Override
     public void checkCollision(PingBall ball) {
+    	// Metodo que define las consecuencias de la colision
         if (collidesWith(ball)) {
             ball.setYSpeed(-ball.getYSpeed());
             destroyed = true;
@@ -46,6 +53,7 @@ public class Block extends Figura implements ICollidable{
     
     @Override
     public boolean collidesWith(PingBall ball) {
+    	// Metodo que verifica si colisionaron o no
         boolean intersectX = (x + width >= ball.getX() - ball.getSize()) && (x <= ball.getX() + ball.getSize());
         boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
         return intersectX && intersectY;

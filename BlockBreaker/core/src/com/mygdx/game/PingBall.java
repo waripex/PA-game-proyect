@@ -13,7 +13,7 @@ public class PingBall extends Figura{
 	    private Color color = Color.WHITE;
 	    private boolean estaQuieto;
 	    
-	    
+	    // Constructor clase PingBall
 	    public PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
 	    	super(x,y, Color.WHITE);
 	        this.x = x;
@@ -24,6 +24,7 @@ public class PingBall extends Figura{
 	        estaQuieto = iniciaQuieto;
 	    }
 	    
+	    // Setter y getters especiales
 	    public boolean estaQuieto() {
 	    	return estaQuieto;
 	    }
@@ -43,12 +44,16 @@ public class PingBall extends Figura{
 	    	this.x = x;
 	        this.y = y;
 	    }
+	    // Setters y getters: Atributos primitivos
 	    public int getY() {return y;}
 	    public int getX() {return x;}
 	    public int getSize() {return size;}
 	    public int getXSpeed() {return xSpeed;}
 	    public int getYSpeed() {return ySpeed;}
 	    
+	    
+	    // implementacion de metodos heredados de la clase abstracta Figura
+		// Los metodos son: update() y draw ()
 
 	    @Override
 	    public void draw(ShapeRenderer shape){
@@ -70,6 +75,9 @@ public class PingBall extends Figura{
 	        }
 	        
 	    }
+	    
+	    // EL siguiente trozo de codigo, le otorga la responsabilidad de revisar las colisiones a esta clase
+	    // Por diseno, esto se modularizo en una interfaz, la cual se implementa en las clases Paddle y Block
 	    
 	    /*
 	    public void checkCollision(Paddle paddle) {

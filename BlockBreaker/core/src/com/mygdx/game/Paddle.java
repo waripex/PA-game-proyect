@@ -11,6 +11,7 @@ public class Paddle extends Figura implements ICollidable{
     private int width;
     private int height;
     
+    // Constructor de la clase Paddle
     public Paddle(int x, int y, int ancho, int alto) {
     	super(x, y, Color.BLUE);
     	this.x = x;
@@ -25,7 +26,11 @@ public class Paddle extends Figura implements ICollidable{
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
 	
+	// implementacion de metodos heredados de la clase abstracta Figura
+	// Los metodos son: update() y draw ()
+	@Override
 	public void update() {
+		//metodo en el cual actualiza la informacion de estado del objeto
         int x2 = x; //= Gdx.input.getX();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x2 =x-15;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x2=x+15; 
@@ -35,15 +40,17 @@ public class Paddle extends Figura implements ICollidable{
         }
     }
     
-	// Extra 
 	@Override
     public void draw(ShapeRenderer shape) {
+		// metodo en el que se "dibuja" y se "pinta" la figura Paddle
     	shape.setColor(Color.BLUE);
     	shape.rect(x, y, width, height);
     }
 	
+	// Implementacion metodos de interfaz ICollidable
 	@Override
 	public void checkCollision(PingBall ball) {
+		// Metodo que define las consecuencias de la colision
         if (collidesWith(ball)) {
             ball.setYSpeed(-ball.getYSpeed());
             ball.setColor(Color.GREEN);
@@ -54,6 +61,7 @@ public class Paddle extends Figura implements ICollidable{
 	
 	@Override
 	public boolean collidesWith(PingBall ball) {
+		// Metodo que verifica si colisionaron o no
         boolean intersectX = (x + width >= ball.getX() - ball.getSize()) && (x <= ball.getX() + ball.getSize());
         boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
         return intersectX && intersectY;
