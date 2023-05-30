@@ -18,9 +18,9 @@ public class PingBall extends Figura{
 	    	super(x,y, Color.WHITE);
 	        this.x = x;
 	        this.y = y;
-	        this.size = size;//tamaño
-	        this.xSpeed += xSpeed;
-	        this.ySpeed += ySpeed;
+	        this.size = size;
+	        this.xSpeed = xSpeed;
+	        this.ySpeed = ySpeed;
 	        estaQuieto = iniciaQuieto;
 	    }
 	    
@@ -31,18 +31,33 @@ public class PingBall extends Figura{
 	    public void setEstaQuieto(boolean bb) {
 	    	estaQuieto=bb;
 	    }
+	    public void setColor(Color color) {
+	    	this.color = color;
+	    }
+	    
+	    public void setYSpeed(int ySpeed) {
+	    	this.ySpeed = ySpeed;
+	    }
+	    
 	    public void setXY(int x, int y) {
 	    	this.x = x;
 	        this.y = y;
 	    }
 	    public int getY() {return y;}
+	    public int getX() {return x;}
+	    public int getSize() {return size;}
+	    public int getXSpeed() {return xSpeed;}
+	    public int getYSpeed() {return ySpeed;}
 	    
+
 	    @Override
 	    public void draw(ShapeRenderer shape){
 	        shape.setColor(color);
 	        shape.circle(x, y, size);// size : radio
 	    }
 	    
+	
+	    @Override
 	    public void update() {
 	    	if (estaQuieto) return;
 	        x += xSpeed;
@@ -56,6 +71,7 @@ public class PingBall extends Figura{
 	        
 	    }
 	    
+	    /*
 	    public void checkCollision(Paddle paddle) {
 	        if(collidesWith(paddle)){
 	            color = Color.GREEN;
@@ -83,6 +99,7 @@ public class PingBall extends Figura{
 	    	boolean intersectaX = (bb.x + bb.width >= x-size) && (bb.x <= x+size);
 	        boolean intersectaY = (bb.y + bb.height >= y-size) && (bb.y <= y+size);		
 	    	return intersectaX && intersectaY;
-	    }
+	    }*/
+
 	    
 	}

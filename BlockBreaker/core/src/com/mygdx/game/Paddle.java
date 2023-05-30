@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Paddle extends Figura{
+public class Paddle extends Figura implements ICollidable{
     private int x;
     private int y;
     private int width;
@@ -15,8 +15,8 @@ public class Paddle extends Figura{
     	super(x, y, Color.BLUE);
     	this.x = x;
     	this.y= y;
-    	width = 200;//350 max
-    	height = 15;// lo k quieras
+    	width = ancho;
+    	height = alto;
     }
      
     // Setter & getter: atributos primitivos
@@ -35,9 +35,29 @@ public class Paddle extends Figura{
         }
     }
     
+	// Extra 
 	@Override
     public void draw(ShapeRenderer shape) {
     	shape.setColor(Color.BLUE);
     	shape.rect(x, y, width, height);
     }
+	
+	@Override
+	public void checkCollision(PingBall ball) {
+        if (collidesWith(ball)) {
+            ball.setYSpeed(-ball.getYSpeed());
+            ball.setColor(Color.GREEN);
+        } else {
+            ball.setColor(Color.WHITE);
+        }
+    }
+	
+	@Override
+	public boolean collidesWith(PingBall ball) {
+        boolean intersectX = (x + width >= ball.getX() - ball.getSize()) && (x <= ball.getX() + ball.getSize());
+        boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
+        return intersectX && intersectY;
+    }
+	
+	
 }
