@@ -12,9 +12,10 @@ public class PingBall extends Figura{
 	    private int ySpeed;
 	    private Color color = Color.WHITE;
 	    private boolean estaQuieto;
+	    private static PingBall ball;
 	    
 	    // Constructor clase PingBall
-	    public PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
+	    private PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
 	    	super(x,y, Color.WHITE);
 	        this.x = x;
 	        this.y = y;
@@ -27,8 +28,14 @@ public class PingBall extends Figura{
 	    // Setter y getters especiales
 	    
 	    	// get de Singleton 
+    
 	    public static PingBall getInstance(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
-	    	return PingBallSingleton.getInstance(x, y, size, xSpeed, ySpeed, iniciaQuieto);
+	    	if (ball == null) {
+				ball = new PingBall(x, y, size, xSpeed, ySpeed, iniciaQuieto);
+			}
+			return ball;
+	    	
+	    	//return PingBallSingleton.getInstance(x, y, size, xSpeed, ySpeed, iniciaQuieto);
 	    }
 	    
 	    public boolean estaQuieto() {

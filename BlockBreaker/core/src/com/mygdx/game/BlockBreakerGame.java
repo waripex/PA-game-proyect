@@ -19,7 +19,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private SpriteBatch batch;	   
 	private BitmapFont font;
 	private ShapeRenderer shape;
-	private PingBall ball;
+	private Figura ball;
 	private Paddle pad;
 	private ArrayList<Block> blocks = new ArrayList<>();
 	private int vidas;
@@ -43,7 +43,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    tamano = 2;
 		    
 		    shape = new ShapeRenderer();
-		    ball = PingBallSingleton.getInstance(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true );
+		    ball = PingBall.getInstance(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true );
 		    //ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true);
 		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
 		    vidas = 3;
@@ -99,16 +99,17 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        
 	        
 	        // monitorear inicio del juego
-	        if (ball.estaQuieto()) {
-	        	ball.setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
-	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ball.setEstaQuieto(false); gameOver =false;
+	        // if ( ball.estaQuieto())
+	        if (((PingBall)ball).estaQuieto()) {
+	        	((PingBall)ball).setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
+	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ((PingBall)ball).setEstaQuieto(false); gameOver =false;
 	        }else ball.update();
 	        
 	        //verificar si se fue la bola x abajo
-	        if (ball.getY()<0) {
+	        if (((PingBall)ball).getY()<0) {
 	        	vidas--;
 	        	//nivel = 1;
-	        	ball = PingBallSingleton.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5+vel, 7+vel, true);
+	        	ball = PingBall.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5+vel, 7+vel, true);
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5+vel, 7+vel, true);
 	        }
 	        
@@ -128,6 +129,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        
 	        }
 	        
+	        
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
 	        	nivel++;
@@ -135,7 +137,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        	tamano +=2;
 	        	vel ++;
 	        	crearBloques(2+nivel);
-	        	ball = PingBallSingleton.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
+	        	ball = PingBall.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
 	        }    	
 	        
@@ -144,7 +146,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        for (Block b : blocks) {        	
 	            b.draw(shape);
 	            //ball.checkCollision(b);
-	            b.checkCollision(ball);
+	            b.checkCollision(((PingBall)ball));
 	        }
 	        
 	        // actualizar estado de los bloques 
@@ -160,7 +162,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	       
 	        
 	        //ball.checkCollision(pad);
-	        pad.checkCollision(ball);
+	        pad.checkCollision((PingBall)ball);
 	        ball.draw(shape);
 	        
 	        shape.end();
