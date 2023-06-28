@@ -10,9 +10,10 @@ public class Paddle extends Figura implements ICollidable{
     private int y;
     private int width;
     private int height;
+    private static Paddle pad;
     
     // Constructor de la clase Paddle
-    public Paddle(int x, int y, int ancho, int alto) {
+    private Paddle(int x, int y, int ancho, int alto) {
     	super(x, y, Color.BLUE);
     	this.x = x;
     	this.y= y;
@@ -20,6 +21,15 @@ public class Paddle extends Figura implements ICollidable{
     	height = alto;
     }
      
+    //Singleton Paddle
+    public static Paddle getInstance(int x, int y, int ancho, int alto) {
+    	if (pad == null) {
+    		pad = new Paddle(x,y,ancho,alto);
+    	}
+    	return pad;
+    }
+    
+    
     // Setter & getter: atributos primitivos
     public int getX() {return x;}
 	public int getY() {return y;}
@@ -28,6 +38,16 @@ public class Paddle extends Figura implements ICollidable{
 	
 	// implementacion de metodos heredados de la clase abstracta Figura
 	// Los metodos son: update() y draw ()
+
+	@Override
+    public void draw(ShapeRenderer shape) {
+		// metodo en el que se "dibuja" y se "pinta" la figura Paddle
+    	shape.setColor(Color.BLUE);
+    	shape.rect(x, y, width, height);
+    }
+	
+	
+	
 	@Override
 	public void update() {
 		//metodo en el cual actualiza la informacion de estado del objeto
@@ -40,12 +60,7 @@ public class Paddle extends Figura implements ICollidable{
         }
     }
     
-	@Override
-    public void draw(ShapeRenderer shape) {
-		// metodo en el que se "dibuja" y se "pinta" la figura Paddle
-    	shape.setColor(Color.BLUE);
-    	shape.rect(x, y, width, height);
-    }
+
 	
 	// Implementacion metodos de interfaz ICollidable
 	@Override

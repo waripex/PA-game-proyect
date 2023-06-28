@@ -20,7 +20,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private BitmapFont font;
 	private ShapeRenderer shape;
 	private Figura ball;
-	private Paddle pad;
+	private Figura pad;
 	private ArrayList<Block> blocks = new ArrayList<>();
 	private int vidas;
 	private int puntaje;
@@ -28,29 +28,46 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private boolean gameOver;//extra
 	private int vel;
 	private int tamano;
+	private Nivel lvl;
 
     
 		@Override
 		public void create () {	
+			lvl = new Nivel1();
+			
+			// Pantalla 
+			lvl.crearBaseGame(camera, batch, font, shape);
+			
+			/*
 			camera = new OrthographicCamera();
 		    camera.setToOrtho(false, 800, 480);
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
+		    shape = new ShapeRenderer();
+		    */
+			
+			
+		    //datos del juego
 		    nivel = 1;
-		    crearBloques(2+nivel);
+		    vidas = 3;
+		    puntaje = 0;
 		    vel = 1;
 		    tamano = 2;
 		    
-		    shape = new ShapeRenderer();
+		    //Figuras
+		    /*
+		    crearBloques(2+nivel);
 		    ball = PingBall.getInstance(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true );
 		    //ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10+tamano, 5+vel, 7+vel, true);
-		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
-		    vidas = 3;
-		    puntaje = 0; 
+		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);*/
+
+		    lvl.crearPiezas(ball, pad, nivel, tamano, vel);
+
 		    
 		}
 		
+		/*
 		// Metodo en el cual se crean todos los bloques que se mostraran al iniciar el juego
 		public void crearBloques(int filas) {
 			blocks.clear();
@@ -63,7 +80,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		            blocks.add(new Block(x, y, blockWidth, blockHeight));
 		        }
 		    }
-		}
+		}*/
 		
 		// Metodo encargado de imprimir todos los textos del juego.
 		public void dibujaTextos() {
@@ -101,43 +118,57 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        // monitorear inicio del juego
 	        // if ( ball.estaQuieto())
 	        if (((PingBall)ball).estaQuieto()) {
-	        	((PingBall)ball).setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
-	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ((PingBall)ball).setEstaQuieto(false); gameOver =false;
+	        	((PingBall)ball).setXY(((Paddle)pad).getX()+((Paddle)pad).getWidth()/2-5, ((Paddle)pad).getY()+((Paddle)pad).getHeight()+11);
+	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+	        		((PingBall)ball).setEstaQuieto(false); 
+	        		gameOver =false;
+	        	}
 	        }else ball.update();
 	        
 	        //verificar si se fue la bola x abajo
 	        if (((PingBall)ball).getY()<0) {
+	        	// Si se cae la pelota, reinicio pelota
 	        	vidas--;
+	        	
+	        	
 	        	//nivel = 1;
-	        	ball = PingBall.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5+vel, 7+vel, true);
+	        	ball = PingBall.getInstance(((Paddle)pad).getX()+((Paddle)pad).getWidth()/2-5, ((Paddle)pad).getY()+((Paddle)pad).getHeight()+11, 10, 5+vel, 7+vel, true);
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5+vel, 7+vel, true);
 	        }
 	        
 	        // verificar game over
 	        if (vidas<=0) {
 	        	// Reinicio del nivel
+	        	// Perdio
+	        	
+	        	
+	        	// lvl.iniciarNivel()
+
+	        	
 	        	vidas = 3;
 	        	nivel = 1;
 	        	vel = 1;
 	        	tamano = 2;
 	        	puntaje = 0;
-	        	crearBloques(2+nivel);
+	        	//lvl.crearBloques(2+nivel);
+	        	lvl.crearPiezas(ball, pad, nivel, tamano, nivel);
 	        	gameOver = true; // extra
-	        	
-	        	
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 	        
 	        }
 	        
 	        
-	        // verificar si el nivel se terminó
+	        // verificar si el nivel se terminó (pasas a sgte nivel)
 	        if (blocks.size()==0) {
+	        	
+	        	// Se inicia siguiente nivel
+	        	
 	        	nivel++;
 	        	vidas ++;// Se le agrega una vida extra al pasr de nivel
 	        	tamano +=2;
 	        	vel ++;
-	        	crearBloques(2+nivel);
-	        	ball = PingBall.getInstance(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
+	        	lvl.crearBloques(2+nivel);
+	        	ball = PingBall.getInstance(((Paddle)pad).getX()+((Paddle)pad).getWidth()/2-5, ((Paddle)pad).getY()+((Paddle)pad).getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
 	        }    	
 	        
@@ -162,7 +193,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	       
 	        
 	        //ball.checkCollision(pad);
-	        pad.checkCollision((PingBall)ball);
+	        ((Paddle)pad).checkCollision((PingBall)ball);
 	        ball.draw(shape);
 	        
 	        shape.end();
