@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class HardBlock implements BlockStrategy,ICollidable {
+public class HardBlock implements BlockStrategy {
 	//se usan la interfaz BlockStrategy y ICollidable 
 	//para la implementacion de este nuevo tipo de bloque
 	private int x,y,width,height;
@@ -14,12 +14,13 @@ public class HardBlock implements BlockStrategy,ICollidable {
     
    
  // Constructor de la clase HardBlock
-    public HardBlock(int x, int y, int width, int height) {
+    public HardBlock(int x, int y, int width, int height, int resistencia) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         destroyed = false;
+        this.resistencia = resistencia;
     }
     
 
@@ -36,6 +37,7 @@ public class HardBlock implements BlockStrategy,ICollidable {
         if (collidesWith(ball)) {
             ball.setYSpeed(-ball.getYSpeed());
             resistencia--;
+            
             if(resistencia <= 0)
             	destroyed = true;
         }
@@ -48,5 +50,12 @@ public class HardBlock implements BlockStrategy,ICollidable {
         boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
         return intersectX && intersectY;
     }
+    
+    
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
 	
 }

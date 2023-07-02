@@ -21,14 +21,15 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private ShapeRenderer shape;
 	private Figura ball;
 	private Figura pad;
-	private ArrayList<Block> blocks = new ArrayList<>();
+	private ArrayList<BlockStrategy> blocks = new ArrayList<>();
 	private int vidas;
 	private int puntaje;
 	private int nivel;
 	private boolean gameOver;//extra
 	private int vel;
 	private int tamano;
-
+	
+		
     
 		@Override
 		public void create () {	
@@ -38,7 +39,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
 		    nivel = 1;
-		    crearBloques(1+nivel);
+		    crearBloques(1+nivel,nivel);
 		    vel = 1;
 		    tamano = 2;
 		    
@@ -51,17 +52,41 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		}
 		
 		// Metodo en el cual se crean todos los bloques que se mostraran al iniciar el juego
-		public void crearBloques(int filas) {
+		public void crearBloques(int filas, int nivel) {
 			blocks.clear();
 			int blockWidth = 70;
 		    int blockHeight = 26;
+		    int resistencia1 = 1;
+		    int resistencia3 = 3;
+		    int resistencia5 = 5;
 		    int y = Gdx.graphics.getHeight();
 		    for (int cont = 0; cont<filas; cont++ ) {
 		    	y -= blockHeight+10;
-		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 15) {//15 0 -15
-		            blocks.add(new Block(x, y, blockWidth, blockHeight));
+		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 5) {//15 0 -15
+		            //blocks.add(new Block(x, y, blockWidth, blockHeight));
+		    		
+		    		// Crear instancias de los bloques y agregarlos a las listas correspondientes
+	                NormalBlock normalBlock = new NormalBlock(x, y, blockWidth, blockHeight,resistencia1);
+	                HardBlock hardBlock = new HardBlock(x, y, blockWidth, blockHeight,resistencia3);
+	                ExtremeBlock extremeBlock = new ExtremeBlock(x, y, blockWidth, blockHeight,resistencia5);
+	                if(nivel == 1) {
+	                	blocks.add(normalBlock);
+	                	blocks.add(hardBlock);
+	                	
+	                	//.add(normalBlock);
+	                }
+	                if(nivel==2) {
+	                	blocks.add(normalBlock);
+	                	blocks.add(hardBlock);
+		                //hardblocks.add(hardBlock);
+	                }
+	                if(nivel==3) {
+	                	blocks.add(extremeBlock);
+		                //extremeblocks.add(extremeBlock);
+	                }  
 		        }
 		    }
+		    nivel++;
 		}
 		
 		// Metodo encargado de imprimir todos los textos del juego.
@@ -91,8 +116,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		
 		@Override
 		public void render () {
-			Gdx.gl.glClearColor(1, 0, 1, 1);
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
+			Gdx.gl.glClearColor(1, 0, 1, 1);//cambio de fondo de pantalla
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 	        shape.begin(ShapeRenderer.ShapeType.Filled);
 	        pad.draw(shape);
 	        pad.update();
@@ -117,7 +142,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	                vel = 1;
 	                tamano = 2;
 	                puntaje = 0;
-	                crearBloques(1+nivel);
+	                crearBloques(1+nivel,nivel);
 	                gameOver = true;
 	            }
 	        }
@@ -130,7 +155,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        	vel = 1;
 	        	tamano = 2;
 	        	puntaje = 0;
-	        	crearBloques(1+nivel);
+	        	crearBloques(1+nivel,nivel);
 	        	gameOver = true; // extra
 	        	
 	        	
@@ -144,29 +169,28 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        	vidas ++;// Se le agrega una vida extra al pasar de nivel
 	        	tamano +=2;
 	        	vel ++;
-	        	crearBloques(1+nivel);
+	        	crearBloques(1+nivel,nivel);
 	        	ball = new PingBall(pad.getX()+((Paddle)pad).getWidth()/2-5, pad.getY()+((Paddle)pad).getHeight()+11, 10+tamano, 5+vel, 7+vel, true);
 	        }    	
 	        
 	        
 	        //dibujar bloques
-	        for (Block b : blocks) {        	
+	        for (BlockStrategy b: blocks) {        	
 	            b.draw(shape);
 	            //ball.checkCollision(b);
 	            b.checkCollision((PingBall)(ball));
 	        }
 	        
+	        
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
-	            Block b = blocks.get(i);
-	            if (b.destroyed) {
+	            BlockStrategy b = blocks.get(i);
+	            if (b.isDestroyed()) {
 	            	puntaje++;
 	                blocks.remove(b);
 	                i--; //para no saltarse 1 tras eliminar del arraylist
 	            }
 	        }
-	        
-	       
 	        
 	        //ball.checkCollision(pad);
 	        ((Paddle)pad).checkCollision((PingBall)(ball));

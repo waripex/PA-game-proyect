@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class ExtremeBlock implements BlockStrategy,ICollidable {
+public class ExtremeBlock implements BlockStrategy {
 	//se usan la interfaz BlockStrategy y ICollidable 
 	//para la implementacion de este nuevo tipo de bloque
 	private int x,y,width,height;
@@ -14,12 +14,13 @@ public class ExtremeBlock implements BlockStrategy,ICollidable {
 
    
  // Constructor de la clase ExtremeBlock
-    public ExtremeBlock(int x, int y, int width, int height) {
+    public ExtremeBlock(int x, int y, int width, int height, int resistencia) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         destroyed = false;
+        this.resistencia = resistencia;
     }
     
 
@@ -50,4 +51,9 @@ public class ExtremeBlock implements BlockStrategy,ICollidable {
         return intersectX && intersectY;
     }
 	
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
 }

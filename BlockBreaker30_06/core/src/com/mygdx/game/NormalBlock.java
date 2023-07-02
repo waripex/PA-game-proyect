@@ -3,21 +3,23 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class NormalBlock implements BlockStrategy,ICollidable{
+public class NormalBlock implements BlockStrategy{
 	//se usan la interfaz BlockStrategy y ICollidable 
 	//para la implementacion de este nuevo tipo de bloque
 	private int x,y,width,height;
     private Color cc = Color.ROYAL;
     boolean destroyed;
+    int resistencia = 1;
     
    
  // Constructor de la clase NormalBlock
-    public NormalBlock(int x, int y, int width, int height) {
+    public NormalBlock(int x, int y, int width, int height, int resistencia) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         destroyed = false;
+        this.resistencia = resistencia;
     }
     
     //implementacion de metodos de interfaz BlockStrategy
@@ -33,7 +35,9 @@ public class NormalBlock implements BlockStrategy,ICollidable{
     	// Metodo que define las consecuencias de la colision
         if (collidesWith(ball)) {
             ball.setYSpeed(-ball.getYSpeed());
-            destroyed = true;
+            resistencia--;
+            if(resistencia <= 0)
+            	destroyed = true;
         }
     }
     
@@ -44,5 +48,11 @@ public class NormalBlock implements BlockStrategy,ICollidable{
         boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
         return intersectX && intersectY;
     }
+    
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
 	
 }
