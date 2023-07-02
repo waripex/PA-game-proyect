@@ -33,7 +33,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		@Override
 		public void create () {	
 			camera = new OrthographicCamera();
-		    camera.setToOrtho(false, 800, 480);
+		    camera.setToOrtho(false, 800, 500);
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
@@ -91,6 +91,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		
 		@Override
 		public void render () {
+			Gdx.gl.glClearColor(1, 0, 1, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
 	        shape.begin(ShapeRenderer.ShapeType.Filled);
 	        pad.draw(shape);

@@ -1,19 +1,18 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-import java.util.Random;
-
-import com.badlogic.gdx.graphics.Color;
-
-public class Block implements ICollidable{
-    private int x,y,width,height;
-    private Color cc = Color.SCARLET;
+public class NormalBlock implements BlockStrategy,ICollidable{
+	//se usan la interfaz BlockStrategy y ICollidable 
+	//para la implementacion de este nuevo tipo de bloque
+	private int x,y,width,height;
+    private Color cc = Color.ROYAL;
     boolean destroyed;
     
    
- // Constructor de la clase Block
-    public Block(int x, int y, int width, int height) {
+ // Constructor de la clase NormalBlock
+    public NormalBlock(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -21,19 +20,14 @@ public class Block implements ICollidable{
         destroyed = false;
     }
     
- 
-    //Extra
+    //implementacion de metodos de interfaz BlockStrategy
     public void draw(ShapeRenderer shape){
-    	// metodo en el que se "dibuja" y se "pinta" Block
+    	// metodo en el que se "dibuja" y se "pinta" el bloque normal
     	shape.setColor(cc);
         shape.rect(x, y, width, height);
     }
     
-
-    public void update() {// No se utliza
-    }
-    
-    // Implementacion metodos de interfaz ICollidable
+ // Implementacion metodos de interfaz ICollidable
     @Override
     public void checkCollision(PingBall ball) {
     	// Metodo que define las consecuencias de la colision
@@ -50,4 +44,5 @@ public class Block implements ICollidable{
         boolean intersectY = (y + height >= ball.getY() - ball.getSize()) && (y <= ball.getY() + ball.getSize());
         return intersectX && intersectY;
     }
+	
 }
