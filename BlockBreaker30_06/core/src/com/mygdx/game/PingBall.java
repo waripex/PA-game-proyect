@@ -8,13 +8,13 @@ public class PingBall extends Figura{
 	    private int size;
 	    private int xSpeed;
 	    private int ySpeed;
-	    private Color color = Color.ORANGE;
+	    private Color color = Color.SALMON;
 	    private boolean estaQuieto;
 	    
 	    
 	    // Constructor clase PingBall
 	    public PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
-	    	super(x,y, Color.ORANGE);
+	    	super(x,y, Color.SALMON);
 	        this.size = size;
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
@@ -51,7 +51,7 @@ public class PingBall extends Figura{
 
 	    @Override
 	    public void draw(ShapeRenderer shape){
-	        shape.setColor(color);
+	        shape.setColor(Color.SALMON);
 	        shape.circle(super.getX(), super.getY(), size);// size : radio
 	    }
 	    

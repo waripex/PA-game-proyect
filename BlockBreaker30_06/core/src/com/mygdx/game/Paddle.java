@@ -15,7 +15,7 @@ public class Paddle extends Figura implements ICollidable{
     
     // Constructor de la clase Paddle
     private Paddle(int x, int y, int ancho, int alto) {
-    	super(x, y, Color.BLUE);
+    	super(x, y, Color.DARK_GRAY);
     	width = ancho;
     	height = alto;
     }
@@ -50,7 +50,7 @@ public class Paddle extends Figura implements ICollidable{
 	@Override
     public void draw(ShapeRenderer shape) {
 		// metodo en el que se "dibuja" y se "pinta" la figura Paddle
-    	shape.setColor(Color.BLUE);
+    	shape.setColor(Color.DARK_GRAY);
     	shape.rect(super.getX(), super.getY(), width, height);
     }
 	

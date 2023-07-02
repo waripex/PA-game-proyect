@@ -1,15 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.Color;
 
 public class Block implements ICollidable{
     private int x,y,width,height;
     private Color cc = Color.SCARLET;
-    boolean destroyed;
+    private boolean destroyed;
     
    
  // Constructor de la clase Block

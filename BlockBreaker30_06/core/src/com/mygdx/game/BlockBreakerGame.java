@@ -34,7 +34,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		@Override
 		public void create () {	
 			camera = new OrthographicCamera();
-		    camera.setToOrtho(false, 800, 500);
+		    camera.setToOrtho(false, 1000, 500);
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
@@ -55,7 +55,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		public void crearBloques(int filas, int nivel) {
 			blocks.clear();
 			int blockWidth = 70;
-		    int blockHeight = 26;
+		    int blockHeight = 35;
 		    int resistencia1 = 1;
 		    int resistencia3 = 3;
 		    int resistencia5 = 5;
@@ -70,13 +70,10 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	                HardBlock hardBlock = new HardBlock(x, y, blockWidth, blockHeight,resistencia3);
 	                ExtremeBlock extremeBlock = new ExtremeBlock(x, y, blockWidth, blockHeight,resistencia5);
 	                if(nivel == 1) {
-	                	blocks.add(normalBlock);
-	                	blocks.add(hardBlock);
-	                	
+	                	blocks.add(normalBlock);	                	
 	                	//.add(normalBlock);
 	                }
 	                if(nivel==2) {
-	                	blocks.add(normalBlock);
 	                	blocks.add(hardBlock);
 		                //hardblocks.add(hardBlock);
 	                }
@@ -116,7 +113,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		
 		@Override
 		public void render () {
-			Gdx.gl.glClearColor(1, 0, 1, 1);//cambio de fondo de pantalla
+			Gdx.gl.glClearColor(0, 1, 1, 0);//cambio de fondo de pantalla
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
 	        shape.begin(ShapeRenderer.ShapeType.Filled);
 	        pad.draw(shape);
